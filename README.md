@@ -29,7 +29,7 @@ Navigate to your-app-name
 Run in terminal
    npm start
 
-Navigate to http://localhost:8000
+Navigate to http://localhost:4000
 
 You can change the port no. by modifying start script in package.json from
     "start": "react-scripts start",
