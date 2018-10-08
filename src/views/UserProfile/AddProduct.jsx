@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import DateTimePicker from 'react-datetime-picker';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -72,12 +73,12 @@ class MyForm extends Component {
     }
     onChangeCheckIn(e) {
         this.setState({
-            checkIn: e.target.value
+            checkIn: e
         });
     }
     onChangeCheckOut(e) {
         this.setState({
-            checkOut: e.target.value
+            checkOut: e
         });
     }
     
@@ -151,25 +152,20 @@ class MyForm extends Component {
                             </GridContainer>
                             <GridContainer>
                                 <GridItem xs={12} sm={12} md={3}>
-                                <CustomInput
-                                    value={this.state.checkIn}
+                                <label>Check-In Time</label>
+                                <DateTimePicker
                                     onChange={this.onChangeCheckIn}
-                                    labelText="Check-In Time"
-                                    id="checkIn"
-                                    formControlProps={{
-                                    fullWidth: true
-                                    }}
+                                    value={this.state.checkIn}
+                                    name="Check-In Time"
                                 />
                                 </GridItem>
                                 <GridItem xs={12} sm={12} md={3}>
-                                <CustomInput
+                                <label>Check-Out Time</label>
+                                <DateTimePicker
                                     value={this.state.checkOut}
                                     onChange={this.onChangeCheckOut}
-                                    labelText="Check-Out Time"
-                                    id="checkOut"
-                                    formControlProps={{
-                                    fullWidth: true
-                                    }}
+                                    name="Check-Out Time"
+                                
                                 />
                                 </GridItem>
                             </GridContainer>
