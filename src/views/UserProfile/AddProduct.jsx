@@ -12,6 +12,10 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import CardFooter from "components/Card/CardFooter.jsx";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
 
 
 
@@ -31,8 +35,15 @@ const styles = {
       fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
       marginBottom: "3px",
       textDecoration: "none"
+    },
+    formControl: {
+        margin: "spacing.unit",
+        minWidth: 200,
     }
+
 };
+
+
 
 
 class MyForm extends Component {
@@ -40,8 +51,10 @@ class MyForm extends Component {
     constructor(props) {
         super(props);
         this.onChangeGuestId = this.onChangeGuestId.bind(this);
-        this.onChangeName = this.onChangeName.bind(this);
+        this.onChangeFirstName = this.onChangeFirstName.bind(this);
+        this.onChangeLastName = this.onChangeLastName.bind(this);
         this.onChangeType = this.onChangeType.bind(this);
+        this.onChangeNationality = this.onChangeNationality.bind(this);
         this.onChangeCheckIn = this.onChangeCheckIn.bind(this);
         this.onChangeCheckOut = this.onChangeCheckOut.bind(this);
         
@@ -49,11 +62,14 @@ class MyForm extends Component {
 
         this.state = {
             guestId:'',
-            name:'',
+            firstName:'',
+            lastName:'',
             type:'',
+            nationality:'',
             checkIn:'',
             checkOut:'',
-            hotel:'KrishnaOberoi'
+            hotel:'TAJ KRISHNA',
+            verified:'PENDING'
         }
     }
     onChangeGuestId(e) {
@@ -61,14 +77,24 @@ class MyForm extends Component {
             guestId: e.target.value
         });
     }
-    onChangeName(e) {
+    onChangeFirstName(e) {
         this.setState({
-            name: e.target.value
+            firstName: e.target.value
+        });
+    }
+    onChangeLastName(e) {
+        this.setState({
+            lastName: e.target.value
         });
     }
     onChangeType(e) {
         this.setState({
             type: e.target.value
+        });
+    }
+    onChangeNationality(e) {
+        this.setState({
+            nationality: e.target.value
         });
     }
     onChangeCheckIn(e) {
@@ -87,26 +113,31 @@ class MyForm extends Component {
         e.preventDefault();
         const newData = {
             guestId: this.state.guestId,
-            name: this.state.name,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
             type: this.state.type,
+            nationality: this.state.nationality,
             checkIn: this.state.checkIn,
             checkOut: this.state.checkOut,
-            hotel:this.state.hotel
+            hotel:this.state.hotel,
+            verified: this.state.verified,
         }
         axios.post('http://138.68.51.48:3000/api/guest', newData)
         .then(res => console.log(res.data));
         //console.log("PostData: "+this.state);
         this.setState({
             guestId:'',
-            name:'',
+            firstName:'',
+            lastName:'',
             type:'',
+            nationality:'',
             checkIn:'',
             checkOut:''
         });
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes} = this.props;        
         return (
                     <GridContainer>
                         <GridItem xs={12} sm={12} md={12}>
@@ -116,7 +147,7 @@ class MyForm extends Component {
                             </CardHeader>
                             <CardBody>
                             <GridContainer>
-                                <GridItem xs={12} sm={12} md={3}>
+                                <GridItem xs={12} sm={12} md={4}>
                                 <CustomInput
                                     value={this.state.guestId}
                                     onChange={this.onChangeGuestId}
@@ -127,23 +158,23 @@ class MyForm extends Component {
                                     }}
                                 />                                
                                 </GridItem>
-                                <GridItem xs={12} sm={12} md={3}>
+                                <GridItem xs={12} sm={12} md={4}>
                                 <CustomInput
-                                    value={this.state.name}
-                                    onChange={this.onChangeName}
-                                    labelText="Name of Guest"
-                                    id="name"
+                                    value={this.state.firstName}
+                                    onChange={this.onChangeFirstName}
+                                    labelText="First Name"
+                                    id="firstName"
                                     formControlProps={{
                                     fullWidth: true
                                     }}
                                 />
                                 </GridItem>
-                                <GridItem xs={12} sm={12} md={3}>
+                                <GridItem xs={12} sm={12} md={4}>
                                 <CustomInput
-                                    value={this.state.type}
-                                    onChange={this.onChangeType}
-                                    labelText="Id Proof"
-                                    id="type"
+                                    value={this.state.lastName}
+                                    onChange={this.onChangeLastName}
+                                    labelText="Last Name"
+                                    id="lastName"
                                     formControlProps={{
                                     fullWidth: true
                                     }}
@@ -151,15 +182,50 @@ class MyForm extends Component {
                                 </GridItem>
                             </GridContainer>
                             <GridContainer>
-                                <GridItem xs={12} sm={12} md={3}>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="Doc_Type">Id Proof</InputLabel>
+                                <Select
+                                    autoWidth={true}
+                                    value={this.state.type}
+                                    onChange={this.onChangeType}
+                                    inputProps={{
+                                    name: 'type',
+                                    id: 'Doc_Type',
+                                    }}
+                                >
+                                    <MenuItem value={"Passport"}>Passport</MenuItem>
+                                    <MenuItem value={"Driving_Licence"}>Driving Licence</MenuItem>
+                                    <MenuItem value={"Aadhar"}>Aadhar</MenuItem>
+                                    <MenuItem value={"VoterId"}>Voter Id</MenuItem>
+                                </Select>
+                                </FormControl>
+                                </GridItem>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <CustomInput
+                                    value={this.state.nationality}
+                                    onChange={this.onChangeNationality}
+                                    labelText="Nationality"
+                                    id="nationality"
+                                    formControlProps={{
+                                    fullWidth: true
+                                    }}
+                                />
+                                </GridItem>
+                            </GridContainer>
+                            <GridContainer>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <FormControl className={classes.formControl}>
                                 <label>Check-In Time</label>
                                 <DateTimePicker
                                     onChange={this.onChangeCheckIn}
                                     value={this.state.checkIn}
                                     name="Check-In Time"
                                 />
+                                </FormControl>
                                 </GridItem>
-                                <GridItem xs={12} sm={12} md={3}>
+                                <GridItem xs={12} sm={12} md={6}>
+                                <FormControl className={classes.formControl}>
                                 <label>Check-Out Time</label>
                                 <DateTimePicker
                                     value={this.state.checkOut}
@@ -167,6 +233,7 @@ class MyForm extends Component {
                                     name="Check-Out Time"
                                 
                                 />
+                                </FormControl>
                                 </GridItem>
                             </GridContainer>
                             </CardBody>

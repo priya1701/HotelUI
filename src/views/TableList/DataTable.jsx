@@ -49,18 +49,20 @@ class MyTable extends Component {
     };
   
     componentDidMount() {
-      //var dt;
-      const res = encodeURI('{"where":{"hotel":"KrishnaOberoi"}}');
+      const res = encodeURI('{"where":{"hotel":"TAJ KRISHNA"}}');
       axios
         .get("http://138.68.51.48:3000/api/guest?filter="+res)
         .then(response => {          
           const customers = response.data.map(c => {
             return [
               c.guestId,
-              c.name,
+              c.firstName,
+              c.lastName,
               c.type,
+              c.nationality,
               c.checkIn,
-              c.checkOut
+              c.checkOut,
+              c.verified
             ];
           });
   
@@ -90,8 +92,8 @@ class MyTable extends Component {
               <CardBody>
                 <Table
                   tableHeaderColor="primary"
-                  tableHead={["Guest Id", "Name", "Id Proof", "Check-in Time",
-                              "Check-out Time"
+                  tableHead={["Guest Id", "First Name","Last Name", "Id Proof", "Nationality", "Check-in Time",
+                              "Check-out Time", "Varification"
                     ]}
                   tableData={this.state.Customers}
                 />
