@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import DateTimePicker from 'react-datetime-picker';
+import {Redirect } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -123,8 +124,14 @@ class MyForm extends Component {
             verified: this.state.verified,
         }
         axios.post('http://138.68.51.48:3000/api/guest', newData)
-        .then(res => console.log(res.data));
+        .then(res => {
+            console.log("REsponsssss",res.status);
+            return (<Redirect to="/allcustomers"/>)
+        }
+        
+        );
         //console.log("PostData: "+this.state);
+        //this.props.history.push('/allcustomers');
         this.setState({
             guestId:'',
             firstName:'',

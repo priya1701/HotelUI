@@ -10,7 +10,7 @@ import MyTable from "views/TableList/DataTable.jsx";
 const dashboardRoutes = [
   {
     path: "/allcustomers",
-    sidebarName: "View All Guest",
+    sidebarName: "View All Guests",
     navbarName: "",
     icon: "content_paste",
     component: MyTable
