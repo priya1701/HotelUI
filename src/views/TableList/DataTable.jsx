@@ -54,6 +54,7 @@ class MyTable extends Component {
         .get("http://138.68.51.48:3000/api/guest?filter="+res)
         .then(response => {          
           const customers = response.data.map(c => {
+            var status = "<span class='label label-info'>"+c.verified+"</span>";
             return [
               c.guestId,
               c.firstName,
@@ -62,7 +63,7 @@ class MyTable extends Component {
               c.nationality,
               c.checkIn,
               c.checkOut,
-              c.verified
+              status
             ];
           });
   
@@ -73,6 +74,7 @@ class MyTable extends Component {
           });
           // store the new state object in the component's state
           this.setState({Customers: newState.Customers});
+          //window.location.reload();
         })
         .catch(error => console.log(error));
     }

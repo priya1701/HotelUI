@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import DateTimePicker from 'react-datetime-picker';
-import {Redirect } from "react-router-dom";
+//import {Redirect } from "react-router-dom";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // core components
@@ -126,21 +126,35 @@ class MyForm extends Component {
         axios.post('http://138.68.51.48:3000/api/guest', newData)
         .then(res => {
             console.log("REsponsssss",res.status);
-            return (<Redirect to="/allcustomers"/>)
-        }
-        
-        );
+            if(res.status === 200){
+                this.setState({
+                    guestId:'',
+                    firstName:'',
+                    lastName:'',
+                    type:'',
+                    nationality:'',
+                    checkIn:'',
+                    checkOut:''
+                });
+                alert("Guest has been added successfully"); 
+                window.location="allcustomers" ;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            alert(error);
+        });
         //console.log("PostData: "+this.state);
         //this.props.history.push('/allcustomers');
-        this.setState({
-            guestId:'',
-            firstName:'',
-            lastName:'',
-            type:'',
-            nationality:'',
-            checkIn:'',
-            checkOut:''
-        });
+        // this.setState({
+        //     guestId:'',
+        //     firstName:'',
+        //     lastName:'',
+        //     type:'',
+        //     nationality:'',
+        //     checkIn:'',
+        //     checkOut:''
+        // });
     }
 
     render() {
